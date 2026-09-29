@@ -1,0 +1,14 @@
+.edition-forest-dialogue { position: absolute; left: 50%; bottom: 100px; transform: translateX(-50%); z-index: 7; box-sizing: border-box; width: min(660px, calc(100% - 40px)); min-height: 182px; padding: 33px 48px 40px; border: 0; background: none; color: #797660; cursor: pointer; text-align: left; font: 650 clamp(17px, 1.8vw, 22px)/1.65 system-ui, sans-serif; letter-spacing: -.45px; -webkit-tap-highlight-color: transparent; }
+.edition-forest-dialogue[hidden] { display: none; }
+.edition-forest-dialogue__shape { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; overflow: visible; filter: drop-shadow(0 9px 18px #203d2520); fill: #fffde7; }
+.edition-forest-dialogue__name { position: absolute; top: -13px; left: 39px; max-width: 65%; box-sizing: border-box; padding: 6px 22px 7px; transform: rotate(-5deg); border-radius: 55% 43% 46% 40% / 58% 50% 46% 45%; background: #b7dcd4; color: #558c88; font: 750 15px/1.5 system-ui, sans-serif; letter-spacing: -.3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.edition-forest-dialogue__text { display: block; min-height: 3.3em; overflow-wrap: anywhere; word-break: keep-all; }
+.edition-forest-dialogue__next { position: absolute; left: 50%; bottom: 9px; transform: translateX(-50%); color: #efbd31; font: 800 31px/1 system-ui, sans-serif; opacity: 0; transition: opacity .18s; }
+.edition-forest-dialogue.is-complete .edition-forest-dialogue__next { opacity: 1; animation: edition-forest-dialogue-next 1s ease-in-out infinite; }
+.edition-forest-dialogue:focus-visible { outline: 3px solid #83b3a4; outline-offset: 6px; border-radius: 45px; }
+.edition-forest-dialogue__announcement { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.animal-edition--extended.is-following .edition-forest-follow-exit { bottom: 30px; }
+.animal-edition--extended.is-following .edition-forest-extension-toolbar,.animal-edition--extended.is-following .edition-forest-move-in,.animal-edition--extended.is-following .edition-forest-extension-hint { visibility: hidden; }
+@keyframes edition-forest-dialogue-next { 50% { transform: translateX(-50%) translateY(3px); } }
+@media (max-width: 700px) { .edition-forest-dialogue { bottom: 113px; min-height: 158px; width: calc(100% - 26px); padding: 27px 27px 33px; font-size: 16px; }.edition-forest-dialogue__name { left: 25px; top: -16px; padding: 5px 18px; font-size: 13px; }.edition-forest-dialogue__next { bottom: 6px; font-size: 27px; } }
+@media (prefers-reduced-motion: reduce) { .edition-forest-dialogue.is-complete .edition-forest-dialogue__next { animation: none; } }

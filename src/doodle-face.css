@@ -1,0 +1,373 @@
+.doodle-face {
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  color: #f7f3e9;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 80, 116, .22), transparent 28%),
+    radial-gradient(circle at 86% 80%, rgba(70, 139, 255, .2), transparent 30%),
+    #121212;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.doodle-face[hidden],
+.doodle-face [hidden] {
+  display: none !important;
+}
+
+.doodle-face::before {
+  position: absolute;
+  inset: 0;
+  opacity: .17;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.24'/%3E%3C/svg%3E");
+  content: '';
+  pointer-events: none;
+}
+
+.doodle-face__lobby {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 165px 24px 100px;
+  text-align: center;
+}
+
+.doodle-face__kicker {
+  margin: 0 0 20px;
+  color: #ff5878;
+  font: 700 .72rem/1.2 monospace;
+  letter-spacing: .2em;
+}
+
+.doodle-face__lobby h2 {
+  margin: 0;
+  font: 900 clamp(4.1rem, 11vw, 9.4rem)/.82 'Arial Black', sans-serif;
+  letter-spacing: -.095em;
+  transform: rotate(-2deg);
+  text-shadow: 5px 6px 0 #ff4f70, -3px -3px 0 #4d8dff;
+}
+
+.doodle-face__lobby > p:not(.doodle-face__kicker) {
+  margin: 34px 0 28px;
+  color: rgba(255,255,255,.72);
+  font-size: clamp(.95rem, 1.5vw, 1.12rem);
+  line-height: 1.7;
+}
+
+.doodle-face__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.doodle-face__actions button,
+.doodle-face__leave {
+  border: 1px solid rgba(255,255,255,.28);
+  color: #fff;
+  background: rgba(255,255,255,.06);
+  font: 700 .9rem/1 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.doodle-face__actions button {
+  min-width: 176px;
+  padding: 18px 22px;
+  border-radius: 5px;
+}
+
+.doodle-face__actions button:first-child {
+  border-color: #ff5576;
+  color: #181218;
+  background: #ff5576;
+}
+
+.doodle-face__actions button:hover:not(:disabled),
+.doodle-face__leave:hover { transform: translateY(-2px); background: #fff; color: #151515; }
+.doodle-face__actions button:disabled { opacity: .46; cursor: wait; }
+.doodle-face__actions button span { margin-left: 14px; font-size: 1.15rem; }
+
+.doodle-face__lobby small {
+  margin-top: 18px;
+  color: rgba(255,255,255,.4);
+  font-size: .72rem;
+}
+
+.doodle-face__room {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 116px 14px 14px;
+}
+
+.doodle-face__hud,
+.doodle-face__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 38px;
+  color: rgba(255,255,255,.62);
+  font: 600 .7rem/1 monospace;
+  letter-spacing: .08em;
+}
+
+.doodle-face__hud > div { display: flex; align-items: center; gap: 8px; color: #fff; }
+.doodle-face__live-dot { width: 8px; height: 8px; border-radius: 50%; background: #ff4d6d; box-shadow: 0 0 0 5px rgba(255,77,109,.14); }
+.doodle-face__timer { margin: 0; color: #fff; font-size: 1rem; font-variant-numeric: tabular-nums; }
+.doodle-face__room-code { margin: 0; }
+
+.doodle-face__feeds {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  min-height: 0;
+}
+
+.doodle-face__swap-stage {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.doodle-face__swap-frame {
+  position: absolute;
+  top: 0;
+  width: calc((100% - 8px) / 2);
+  height: 100%;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 8px;
+  background: #202020;
+  box-shadow: 0 20px 60px rgba(0,0,0,.36);
+}
+
+.doodle-face__swap-frame--left { left: 0; }
+.doodle-face__swap-frame--right { right: 0; }
+.doodle-face__swap-stage.is-active .doodle-face__swap-frame--left { animation: doodle-swap-left 850ms cubic-bezier(.65, 0, .2, 1) forwards; }
+.doodle-face__swap-stage.is-active .doodle-face__swap-frame--right { animation: doodle-swap-right 850ms cubic-bezier(.65, 0, .2, 1) forwards; }
+
+.doodle-face__feed {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 8px;
+  background: #242424;
+  isolation: isolate;
+}
+
+.doodle-face__feed::after {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: inherit;
+  content: '';
+  pointer-events: none;
+}
+
+.doodle-face__camera,
+.doodle-face__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.doodle-face__camera { z-index: 1; background: #202020; }
+.doodle-face__canvas { z-index: 3; pointer-events: none; }
+.doodle-face__label {
+  position: absolute;
+  z-index: 6;
+  bottom: 13px;
+  left: 13px;
+  padding: 7px 9px;
+  border-radius: 3px;
+  color: #fff;
+  background: rgba(0,0,0,.55);
+  font: 700 .62rem/1 monospace;
+  letter-spacing: .08em;
+  backdrop-filter: blur(8px);
+}
+
+.doodle-face__camera-wait,
+.doodle-face__peer-wait {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,.64);
+  background: rgba(10,10,10,.08);
+  font: 600 .72rem/1.4 monospace;
+  pointer-events: none;
+}
+
+.doodle-face__peer-wait::before {
+  position: absolute;
+  width: min(260px, calc(100% - 34px));
+  height: 132px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 7px;
+  background: rgba(12,12,12,.58);
+  box-shadow: 0 16px 48px rgba(0,0,0,.28);
+  backdrop-filter: blur(8px);
+  content: '';
+}
+
+.doodle-face__peer-wait span {
+  position: relative;
+  z-index: 1;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 7px;
+  border: 2px solid rgba(255,255,255,.18);
+  border-top-color: #ff5576;
+  border-radius: 50%;
+  animation: doodle-spin 1.1s linear infinite;
+}
+.doodle-face__peer-wait strong,
+.doodle-face__peer-wait small { position: relative; z-index: 1; }
+.doodle-face__peer-wait strong { color: #fff; letter-spacing: .2em; }
+.doodle-face__peer-wait small { font-size: .65rem; }
+
+.doodle-face__palette {
+  position: absolute;
+  z-index: 7;
+  top: 14px;
+  left: 50%;
+  display: flex;
+  gap: 7px;
+  padding: 8px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px;
+  background: rgba(10,10,10,.62);
+  backdrop-filter: blur(12px);
+  transform: translateX(-50%);
+}
+
+.doodle-face__palette button {
+  box-sizing: border-box;
+  width: clamp(19px, 2.25vw, 29px);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+  cursor: pointer;
+}
+.doodle-face__palette button.is-active { border-color: #fff; transform: scale(1.18); box-shadow: 0 0 0 2px rgba(0,0,0,.7); }
+.doodle-face:not(.is-playing) .doodle-face__palette { opacity: .3; }
+
+.doodle-face__center-message {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  justify-items: center;
+  min-width: min(82vw, 520px);
+  padding: 28px 34px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 8px;
+  color: #fff;
+  background: rgba(10,10,10,.68);
+  box-shadow: 0 24px 80px rgba(0,0,0,.45);
+  text-align: center;
+  backdrop-filter: blur(16px);
+  transform: translate(-50%, -45%);
+}
+.doodle-face__message-kicker { margin: 0 0 10px; color: #ff5576; font: 700 .7rem/1 monospace; letter-spacing: .2em; }
+.doodle-face__message-main { font: 900 clamp(2.5rem, 7vw, 6rem)/1 'Arial Black', sans-serif; letter-spacing: -.06em; }
+.doodle-face__message-sub { margin-top: 12px; color: rgba(255,255,255,.68); font-size: .82rem; }
+.doodle-face[data-phase='countdown'] .doodle-face__message-main { font-size: clamp(5rem, 14vw, 10rem); color: #ff5576; }
+.doodle-face[data-phase='result'] .doodle-face__center-message {
+  min-width: min(72vw, 390px);
+  padding: 17px 22px;
+  animation: doodle-result-notice 2.4s ease forwards;
+}
+.doodle-face[data-phase='result'] .doodle-face__message-kicker { margin-bottom: 7px; font-size: .58rem; }
+.doodle-face[data-phase='result'] .doodle-face__message-main { font-size: clamp(1.35rem, 3.2vw, 2.15rem); line-height: 1.15; letter-spacing: -.035em; }
+.doodle-face[data-phase='result'] .doodle-face__message-sub { margin-top: 8px; font-size: .68rem; }
+
+.doodle-face__footer p { margin: 0; }
+.doodle-face__leave { padding: 9px 12px; border-radius: 4px; font-size: .65rem; }
+.doodle-face__status {
+  position: absolute;
+  z-index: 13;
+  right: 16px;
+  bottom: 62px;
+  max-width: min(380px, calc(100vw - 32px));
+  margin: 0;
+  padding: 9px 12px;
+  border-radius: 4px;
+  color: #fff;
+  background: rgba(0,0,0,.62);
+  font-size: .72rem;
+  pointer-events: none;
+}
+.doodle-face__status:empty { display: none; }
+
+@keyframes doodle-spin { to { transform: rotate(360deg); } }
+@keyframes doodle-swap-left { to { transform: translateX(calc(100% + 8px)); } }
+@keyframes doodle-swap-right { to { transform: translateX(calc(-100% - 8px)); } }
+@keyframes doodle-swap-up { to { transform: translateY(calc(-100% - 8px)); } }
+@keyframes doodle-swap-down { to { transform: translateY(calc(100% + 8px)); } }
+@keyframes doodle-result-notice {
+  0%, 80% { opacity: 1; transform: translate(-50%, -45%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -45%) scale(.97); }
+}
+
+@media (max-width: 720px) {
+  .doodle-face__lobby { padding-top: 205px; }
+  .doodle-face__actions { width: min(100%, 390px); flex-direction: column; }
+  .doodle-face__actions button { width: 100%; }
+  .doodle-face__room { grid-template-rows: 0 minmax(0, 1fr) auto; padding: 180px 8px 8px; gap: 6px; }
+  .doodle-face__feeds { grid-row: 2; }
+  .doodle-face__footer { grid-row: 3; }
+  .doodle-face__feeds { grid-template-columns: 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); }
+  .doodle-face__swap-frame { width: 100%; height: calc((100% - 8px) / 2); }
+  .doodle-face__swap-frame--left { top: 0; right: 0; }
+  .doodle-face__swap-frame--right { top: auto; right: 0; bottom: 0; }
+  .doodle-face__swap-stage.is-active .doodle-face__swap-frame--left { animation-name: doodle-swap-down; }
+  .doodle-face__swap-stage.is-active .doodle-face__swap-frame--right { animation-name: doodle-swap-up; }
+  .doodle-face__hud { position: absolute; z-index: 8; top: 144px; right: 10px; left: 10px; }
+  .doodle-face__footer p { display: none; }
+  .doodle-face__footer { justify-content: flex-end; min-height: 34px; }
+  .doodle-face__palette { top: 8px; gap: 4px; padding: 6px; }
+  .doodle-face__palette button { width: min(5.5vw, 24px); }
+  .doodle-face__label { bottom: 8px; left: 8px; font-size: .53rem; }
+}
+
+@media (orientation: landscape) and (max-height: 650px) {
+  .doodle-face__room { padding-top: 86px; }
+  .doodle-face__lobby { padding-top: 96px; padding-bottom: 35px; }
+  .doodle-face__lobby h2 { font-size: clamp(3.5rem, 16vh, 6.5rem); }
+  .doodle-face__lobby > p:not(.doodle-face__kicker) { margin: 17px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle-face__peer-wait span { animation: none; }
+  .doodle-face[data-phase='result'] .doodle-face__center-message { animation: none; }
+}

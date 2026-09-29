@@ -1,0 +1,6 @@
+{
+  "image": "lemon.png",
+  "lemonCount": 6,
+  "juicePerLemon": 100,
+  "cupCapacity": 300
+}

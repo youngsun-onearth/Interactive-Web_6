@@ -1,0 +1,39 @@
+.animal-forest--extended .animal-forest__title h2 { font-size: clamp(28px, 3vw, 44px); }
+.animal-forest--extended .animal-forest__footer p { display: none; }
+.animal-forest--extended .forest-move-in { left: calc(50% + 99px); }
+.forest-extension-toolbar { position: absolute; bottom: 29px; left: calc(50% - 111px); transform: translateX(-50%); z-index: 4; }
+.forest-extension-toolbar button,.forest-preview-actions button,.forest-texture-editor button { border: 1px solid #6e86583d; border-radius: 30px; background: #f6f7e9e8; color: #46603c; cursor: pointer; font: 600 13px/1.3 system-ui, sans-serif; padding: 14px 22px; box-shadow: 0 3px 15px #345b4210; }
+.forest-extension-toolbar button:hover,.forest-preview-actions button:hover,.forest-texture-editor button:hover { background: #e5edcc; }
+.forest-extension-toolbar button:disabled,.forest-texture-editor button:disabled { opacity: .42; cursor: default; }
+.forest-extension-toolbar .forest-meeting { min-height: 59px; min-width: 188px; }
+.forest-follow-exit { position: absolute; bottom: 112px; left: 50%; transform: translateX(-50%); white-space: nowrap; z-index: 4; border: 1px solid #6e86583d; border-radius: 30px; background: #f6f7e9e8; color: #46603c; cursor: pointer; font: 600 12px system-ui, sans-serif; padding: 12px 20px; }
+.forest-extension-hint { position: absolute; left: 50%; bottom: 101px; transform: translateX(-50%); color: #6b825e; font: 11px/1.7 system-ui, sans-serif; text-align: center; width: min(600px, 88%); pointer-events: none; }
+.animal-forest--extended.is-following .forest-extension-hint { bottom: 157px; }
+.animal-forest--extended.is-holding canvas { cursor: grabbing; }
+.animal-forest--extended.is-following .animal-forest__title,.animal-forest--extended.is-following .animal-forest__stamp { opacity: .35; }
+.animal-forest--extended.is-introducing .forest-extension-toolbar,.animal-forest--extended.is-introducing .forest-extension-hint,.animal-forest--extended.is-introducing .forest-residents { visibility: hidden; }
+.forest-preview-actions { position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); z-index: 9; display: flex; gap: 12px; white-space: nowrap; }
+.forest-preview-actions button { min-height: 49px; }
+.forest-preview-actions button[data-action='land'],.forest-texture-editor button[data-tool='done'] { background: #345b42; color: #fffbea; border-color: #345b42; }
+.forest-texture-editor { position: absolute; left: 50%; bottom: 25px; transform: translateX(-50%); width: min(820px, calc(100% - 32px)); z-index: 10; box-sizing: border-box; border: 1px solid #a0b58244; border-radius: 22px; background: #f6f8ecf2; padding: 18px 23px; box-shadow: 0 15px 45px #35543618; backdrop-filter: blur(18px); }
+.forest-texture-editor > div:first-child { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.forest-texture-editor span { font: 8px system-ui, sans-serif; letter-spacing: 2px; color: #8b9d74; }
+.forest-texture-editor strong { font: 550 15px system-ui, sans-serif; color: #45643e; }
+.forest-texture-editor p { font-size: 10px; color: #7b8e68; margin: 0; }
+.forest-texture-editor__tools { display: flex; align-items: center; gap: 8px; margin-top: 15px; flex-wrap: wrap; }
+.forest-texture-editor button { padding: 10px 13px; font-size: 11px; }
+.forest-texture-editor button[aria-pressed='true'] { background: #e1ebca; border-color: #8ba669; }
+.forest-texture-editor label { display: flex; align-items: center; gap: 8px; margin: 0 9px; font-size: 11px; color: #6e825e; }
+.forest-texture-editor input { width: 95px; accent-color: #6e8c4f; }
+.forest-texture-brush { position: absolute; width: 100px; height: 100px; border: 1px solid #fffbdb; background: #e7f2a813; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; box-shadow: 0 0 0 1px #46603c66; z-index: 8; }
+.forest-preview-actions[hidden],.forest-texture-editor[hidden],.forest-texture-brush[hidden],.forest-follow-exit[hidden] { display: none; }
+.is-texture-editing .forest-welcome__name { visibility: hidden; }
+.forest-sinkhole-label { position: absolute; transform: translateX(-50%); z-index: 5; border: 1px solid #8b67506b; border-radius: 30px; padding: 9px 16px; background: #f8efdbed; color: #70503c; box-shadow: 0 4px 15px #39251e20; white-space: nowrap; pointer-events: none; font: 600 11px/1.4 system-ui, sans-serif; transition: background .18s, color .18s; }
+.forest-sinkhole-label.is-targeted { background: #835448; border-color: #835448; color: #fff4d9; }
+.forest-sinkhole-label[hidden] { display: none; }
+@media (max-width: 700px) {
+  .animal-forest--extended .forest-move-in { left: calc(50% + 84px); min-width: 155px; padding: 16px 13px; bottom: 26px; }
+  .forest-extension-toolbar { left: calc(50% - 84px); bottom: 26px; }.forest-extension-toolbar .forest-meeting { min-width: 155px; min-height: 55px; padding: 13px 10px; font-size: 12px; }
+  .forest-extension-hint { bottom: 91px; font-size: 9px; width: 78%; }.forest-preview-actions { bottom: 32px; gap: 7px; }.forest-preview-actions button { padding: 12px 16px; font-size: 12px; }
+  .forest-texture-editor { bottom: 16px; padding: 14px; }.forest-texture-editor__tools { gap: 6px; }.forest-texture-editor label { margin: 0; }.forest-texture-editor input { width: 70px; }.forest-texture-editor p { line-height: 1.5; }
+}

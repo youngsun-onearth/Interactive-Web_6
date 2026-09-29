@@ -1,0 +1,60 @@
+.capture__capture-group { position: relative; display: grid; justify-items: center; gap: 11px; flex-shrink: 0; pointer-events: auto; }
+.capture__shutter { display: grid; place-items: center; width: 68px; height: 68px; padding: 0; border: 3px solid white; border-radius: 50%; background: transparent; box-shadow: 0 2px 14px #00000020; transition: border-color .15s, transform .15s; touch-action: none !important; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.capture__shutter:active { transform: scale(.94); }
+.capture__shutter > span { width: 27px; height: 27px; border-radius: 7px; background: #ff4b4b; opacity: 0; transform: scale(.5); transition: opacity .18s, transform .18s; }
+.capture__shutter.is-recording { border-color: #ff4b4b; }
+.capture__shutter.is-recording > span { opacity: 1; transform: scale(1); }
+.capture__capture-hint { color: #ffffffa6; font-size: 9px; white-space: nowrap; }
+.capture__timer { position: absolute; bottom: calc(100% + 12px); padding: 4px 9px; color: #fff; background: #e34949; border-radius: 20px; font: 600 11px/1.2 ui-monospace, monospace; }
+.capture__flash { position: absolute; inset: 0; background: white; opacity: 0; pointer-events: none; }
+.capture__result { width: min(460px, calc(100% - 24px)); max-height: calc(100dvh - 32px); padding: 22px; border: 1px solid #ece9c7; border-radius: 24px; color: #34452f; background: #f6f5e9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; box-shadow: 0 20px 80px #0005; overflow-y: auto; }
+.capture__result::backdrop { background: #0b1b19a8; backdrop-filter: blur(10px); }
+.capture__result header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.capture__result header p { margin: 0 0 6px; font: 500 8px/1.4 ui-monospace, monospace; letter-spacing: .12em; opacity: .6; }
+.capture__result h3 { margin: 0; font-size: 21px; font-weight: 550; letter-spacing: -.04em; }
+.capture__close { width: 38px; height: 38px; padding: 0; border: 1px solid #34452f30; border-radius: 50%; background: transparent; color: inherit; font-size: 24px; }
+.capture__preview { overflow: hidden; border-radius: 12px; background: #21362b; }
+.capture__preview img, .capture__preview video { display: block; width: 100%; max-height: 55dvh; object-fit: contain; }
+.capture__save-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.capture__save-actions a, .capture__save-actions button { flex: 1; padding: 13px 12px; border: 1px solid #34452f; border-radius: 30px; color: #fffdec; background: #34452f; text-align: center; text-decoration: none; font-size: 12px; white-space: nowrap; }
+.capture__save-actions button { color: #34452f; background: transparent; }
+.capture__save-note { margin: 13px 0 0; color: #34452f99; font-size: 11px; line-height: 1.6; }
+.capture { position: fixed; z-index: 40; inset: 0; pointer-events: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: white; }
+.capture [hidden] { display: none !important; }
+.capture__capture-group { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); }
+.capture button, .capture a { pointer-events: auto; font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.capture button:disabled { opacity: .5; cursor: wait; }
+.capture button:focus-visible, .capture a:focus-visible { outline: 2px solid #dfdc82; outline-offset: 4px; }
+.capture__shutter { background: #17182828; box-shadow: 0 0 0 1px #0003, 0 3px 18px #0003; backdrop-filter: blur(3px); }
+.capture__capture-hint { padding: 3px 7px; color: white; border-radius: 10px; background: #16172380; }
+.capture__result { pointer-events: auto; }
+.capture__result[open] { position: fixed; inset: 50% auto auto 50%; margin: 0; transform: translate(-50%, -50%); }
+.capture__status { position: absolute; bottom: max(140px, calc(env(safe-area-inset-bottom) + 120px)); left: 50%; max-width: calc(100% - 30px); width: max-content; margin: 0; padding: 10px 16px; border-radius: 15px; background: #252635ed; color: white; font-size: 12px; line-height: 1.6; text-align: center; transform: translateX(-50%); }
+.capture__status:empty { display: none; }
+/* Keep the shared shutter clear of the bottom-center game controls. */
+.typing-person { bottom: 128px; }
+.claw-machine__guide { bottom: 130px; }
+.sampler { padding-bottom: max(130px, calc(env(safe-area-inset-bottom) + 110px)); }
+@media (max-width: 600px) {
+  .capture__capture-group { bottom: max(20px, env(safe-area-inset-bottom)); }
+  .capture__shutter { width: 62px; height: 62px; }
+  .capture__capture-hint { font-size: 8px; }
+}
+@media (max-height: 600px) {
+  .capture__capture-group { bottom: max(10px, env(safe-area-inset-bottom)); }
+  .capture__shutter { width: 50px; height: 50px; }
+  .typing-person { bottom: 100px; }
+  .sampler { padding-bottom: 100px; }
+}
+/* Sampler content scrolls above the persistent capture dock. */
+.night-sky[data-example='sampler'] { background: #0b0c11; }
+.sampler {
+  bottom: max(115px, calc(env(safe-area-inset-bottom) + 100px));
+  padding-bottom: 16px;
+  grid-template-rows: repeat(4, max-content);
+  align-content: start;
+  overflow-y: auto;
+}
+@media (max-height: 600px) {
+  .sampler { bottom: max(90px, calc(env(safe-area-inset-bottom) + 75px)); }
+}

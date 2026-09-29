@@ -1,0 +1,31 @@
+.night-sky[data-example='balloon'] { min-height: 100dvh; background: #172533; }
+.night-sky[data-example='balloon']::after { display: none; }
+.night-sky[data-example='balloon'] .example-controls { background: #12213180; border-color: #ffffff42; }
+.night-sky[data-example='balloon'] .example-button.is-active { color: #172536; background: #fff4df; border-color: #fff4df; box-shadow: none; }
+.balloon { position: fixed; inset: 0; height: 100dvh; overflow: hidden; color: #fffdf8; background: #172533; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.balloon [hidden] { display: none !important; }
+.balloon__camera { position: absolute; width: 1px; height: 1px; opacity: .001; pointer-events: none; }
+.balloon__canvas { display: block; width: 100%; height: 100%; }
+.balloon__header { position: absolute; top: max(132px, calc(env(safe-area-inset-top) + 112px)); left: 36px; pointer-events: none; text-shadow: 0 2px 18px #051425aa; }
+.balloon__header p { margin: 0 0 10px; font: 500 9px/1.4 ui-monospace, monospace; letter-spacing: .18em; }
+.balloon__header h2 { margin: 0; font: italic 500 clamp(38px, 4.5vw, 62px)/1 Georgia, serif; letter-spacing: -.055em; }
+.balloon__header > span { display: block; margin-top: 10px; font-size: 11px; opacity: .84; }
+.balloon__readout { position: absolute; top: max(138px, calc(env(safe-area-inset-top) + 118px)); right: 36px; display: grid; justify-items: end; gap: 12px; font: 500 10px/1.4 ui-monospace, monospace; text-shadow: 0 2px 12px #000; }
+.balloon__live { padding: 7px 10px; border: 1px solid #ffffff65; border-radius: 20px; background: #13223570; }
+.balloon.is-ready .balloon__live { color: #fff2c9; }
+.balloon__gate { position: absolute; top: 53%; left: 50%; width: min(360px, calc(100% - 40px)); padding: 26px; transform: translate(-50%, -50%); border: 1px solid #fff2d052; border-radius: 28px; background: #172536dc; backdrop-filter: blur(18px); text-align: center; }
+.balloon__symbol { margin-bottom: 14px; color: #ffe0a4; font: 68px/1 Georgia, serif; }
+.balloon__gate .balloon__eyebrow { font: 500 8px/1.4 ui-monospace, monospace; letter-spacing: .2em; color: #ffe0a4; }
+.balloon__gate h3 { margin: 19px 0 12px; font-size: 23px; font-weight: 500; letter-spacing: -.04em; }
+.balloon__gate p { margin: 0; color: #fffdf8bb; font-size: 12px; line-height: 1.9; }
+.balloon button { font-family: inherit; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.balloon button:focus-visible { outline: 2px solid #ffe0a4; outline-offset: 4px; }
+.balloon__start { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 22px; padding: 15px 20px; border: 0; border-radius: 40px; background: #fff0d2; color: #293344; font-size: 13px; font-weight: 600; }
+.balloon__start:disabled { opacity: .6; cursor: wait; }
+.balloon__gate small { display: block; margin-top: 13px; color: #fffdf875; font-size: 10px; }
+.balloon__hint { position: absolute; bottom: max(133px, calc(env(safe-area-inset-bottom) + 120px)); left: 50%; width: max-content; max-width: calc(100% - 32px); margin: 0; transform: translateX(-50%); font-size: 11px; text-align: center; text-shadow: 0 2px 8px #071522; pointer-events: none; }
+.balloon__reset { position: absolute; right: 24px; bottom: max(37px, calc(env(safe-area-inset-bottom) + 20px)); padding: 9px 12px; border: 1px solid #ffffff65; border-radius: 30px; background: #18283b80; color: #fffdf8; font-size: 11px; }
+.balloon__status { position: absolute; bottom: 170px; left: 50%; width: max-content; max-width: calc(100% - 32px); margin: 0; padding: 12px 16px; transform: translateX(-50%); border-radius: 15px; background: #172536ef; font-size: 12px; line-height: 1.6; text-align: center; }
+.balloon__status:empty { display: none; }
+@media (max-width: 600px) { .balloon__header { top: max(115px, calc(env(safe-area-inset-top) + 95px)); left: 20px; } .balloon__header h2 { font-size: 40px; } .balloon__header p { font-size: 8px; } .balloon__readout { top: max(117px, calc(env(safe-area-inset-top) + 97px)); right: 20px; font-size: 8px; } .balloon__reset { right: 15px; font-size: 10px; } }
+@media (max-height: 600px) { .balloon__gate { top: 56%; padding: 16px 22px; } .balloon__symbol, .balloon__gate .balloon__eyebrow, .balloon__gate small, .balloon__header > span { display: none; } .balloon__gate h3 { margin-top: 0; font-size: 20px; } .balloon__start { margin-top: 12px; } .balloon__header { top: 105px; } .balloon__readout { top: 110px; } .balloon__hint { bottom: 100px; font-size: 10px; } .balloon__status { bottom: 125px; } }

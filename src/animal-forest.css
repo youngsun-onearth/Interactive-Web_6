@@ -1,0 +1,29 @@
+.night-sky:is([data-example='animal-forest'], [data-example='animal-forest-extended']) { background: #edf1e5; min-height: 100dvh; }
+.night-sky:is([data-example='animal-forest'], [data-example='animal-forest-extended'])::after { display: none; }
+.night-sky:is([data-example='animal-forest'], [data-example='animal-forest-extended']) .example-controls { width: min(1100px, calc(100vw - 32px)); border-radius: 28px; border-color: #55715b24; background: #f7f9efc9; box-shadow: 0 8px 30px #304f3910; backdrop-filter: blur(14px); }
+.night-sky:is([data-example='animal-forest'], [data-example='animal-forest-extended']) .example-button { color: #73816d; font-family: system-ui, sans-serif; font-size: 11px; font-weight: 650; padding: 10px 8px; }
+.night-sky:is([data-example='animal-forest'], [data-example='animal-forest-extended']) .example-button span { color: #8b9684; font-size: 9px; }
+.night-sky:is([data-example='animal-forest'], [data-example='animal-forest-extended']) .example-button.is-active { background: #345b42; color: #fffbea; border-color: #345b42; box-shadow: 0 3px 10px #345b4222; }
+.night-sky:is([data-example='animal-forest'], [data-example='animal-forest-extended']) .example-button.is-active span { color: #c0d1ac; }
+.animal-forest { position: fixed; inset: 0; height: 100dvh; overflow: hidden; background: radial-gradient(ellipse at 50% 50%, #fcfcef 0%, #eaf1e2 44%, #d9e8dd 100%); color: #34533e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.animal-forest__viewport { position: absolute; inset: 140px 0 140px; }
+.animal-forest__viewport canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.animal-forest__viewport canvas:active { cursor: grabbing; }
+.animal-forest__title { position: absolute; left: 5%; top: 178px; pointer-events: none; }
+.animal-forest__eyebrow { font-size: 9px; letter-spacing: 2.2px; font-weight: 650; color: #71866a; }
+.animal-forest__title h2 { margin: 17px 0 0; font-family: 'Black Han Sans', system-ui, sans-serif; font-size: clamp(32px, 3.6vw, 53px); font-weight: 400; letter-spacing: -2px; }
+.animal-forest__title h2 span { display: block; margin-top: 15px; font-family: system-ui, sans-serif; font-size: 15px; font-weight: 500; letter-spacing: -.5px; }
+.animal-forest__title p { margin-top: 9px; color: #7a8c71; font-size: 11px; }
+.animal-forest__stamp { position: absolute; top: 181px; right: 5%; display: flex; align-items: center; gap: 7px; color: #6c8b65; }
+.animal-forest__stamp svg { width: 40px; height: 40px; }
+.animal-forest__stamp span { font-size: 9px; letter-spacing: 2px; line-height: 1.7; }
+.animal-forest__footer { position: absolute; left: 5%; right: 5%; bottom: 33px; display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: #708069; }
+.animal-forest__footer p { position: absolute; left: 50%; transform: translateX(-50%); bottom: 90px; white-space: nowrap; letter-spacing: .3px; }
+.animal-forest__footer p span { color: #3d5d43; font-weight: 700; margin-right: 5px; }
+.animal-forest__footer b { margin: 0 16px; font-weight: 400; color: #b3bda7; }
+.animal-forest__live { display: flex; align-items: center; gap: 8px; }
+.animal-forest__live i { width: 5px; height: 5px; border-radius: 50%; background: #7a9b5c; box-shadow: 0 0 0 4px #7a9b5c12; }
+.animal-forest__loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 13px; color: #58724b; }
+body:has(.night-sky:is([data-example='animal-forest'], [data-example='animal-forest-extended'])) .capture { color: #466342; }
+body:has(.night-sky:is([data-example='animal-forest'], [data-example='animal-forest-extended'])) .capture__shutter { border-color: #63865a; background: #f8faec80; box-shadow: 0 3px 14px #49644312; }
+@media (max-width: 849px) { .animal-forest__title { top: 207px; left: 6%; } .animal-forest__title h2 { font-size: 32px; } .animal-forest__stamp { top: 213px; } .animal-forest__viewport { inset: 240px 0 110px; } .animal-forest__title p { display: none; } .animal-forest__footer { left: 6%; right: 6%; } .animal-forest__live { font-size: 9px; } }

@@ -1,0 +1,46 @@
+.night-sky[data-example='water'] { min-height: 100dvh; background: #102a38; }
+.night-sky[data-example='water']::after { display: none; }
+.night-sky[data-example='water'] .example-controls { background: #10242e70; border-color: #ffffff35; }
+.night-sky[data-example='water'] .example-button.is-active { background: #d5f7f4; color: #163b48; border-color: #d5f7f4; box-shadow: none; }
+.water-touch { position: fixed; inset: 0; height: 100dvh; color: #eefcfb; background: #102a38; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.water-touch [hidden] { display: none !important; }
+.water-touch__camera { position: absolute; width: 1px; height: 1px; opacity: .001; pointer-events: none; }
+.water-touch__canvas { width: 100%; height: 100%; display: block; }
+.water-touch__header { position: absolute; top: max(132px, calc(env(safe-area-inset-top) + 112px)); left: 36px; pointer-events: none; text-shadow: 0 2px 18px #081d30aa; }
+.water-touch__header p { margin: 0 0 10px; font: 500 9px/1.4 ui-monospace, monospace; letter-spacing: .18em; }
+.water-touch__header h2 { margin: 0; font: italic 500 clamp(36px, 4.5vw, 60px)/1 Georgia, serif; letter-spacing: -.055em; }
+.water-touch__header > span { display: block; margin-top: 10px; font-size: 11px; opacity: .8; }
+.water-touch__readout { position: absolute; top: max(138px, calc(env(safe-area-inset-top) + 118px)); right: 36px; display: grid; justify-items: end; gap: 12px; font: 500 10px/1.4 ui-monospace, monospace; text-shadow: 0 2px 12px #000; }
+.water-touch__live { padding: 7px 10px; border: 1px solid #ffffff50; border-radius: 20px; background: #14333b50; }
+.water-touch.is-ready .water-touch__live { color: #c7fff1; }
+.water-touch__gate { position: absolute; top: 53%; left: 50%; transform: translate(-50%, -50%); width: min(360px, calc(100% - 40px)); padding: 26px; border: 1px solid #c7f5fc40; border-radius: 28px; background: #102e3bdc; backdrop-filter: blur(18px); text-align: center; }
+.water-touch__symbol { color: #b1edf2; font: 64px/1 Georgia, serif; margin-bottom: 14px; }
+.water-touch__gate .water-touch__eyebrow { font: 500 8px/1.4 ui-monospace, monospace; letter-spacing: .2em; color: #b1edf2; }
+.water-touch__gate h3 { margin: 19px 0 12px; font-size: 23px; font-weight: 500; letter-spacing: -.04em; }
+.water-touch__gate p { margin: 0; font-size: 12px; line-height: 1.9; color: #eefcfbbb; }
+.water-touch button { font-family: inherit; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.water-touch button:focus-visible { outline: 2px solid #b1edf2; outline-offset: 4px; }
+.water-touch__start { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 22px; padding: 15px 20px; border: 0; border-radius: 40px; background: #c8f0f0; color: #183d4a; font-size: 13px; font-weight: 600; }
+.water-touch__start:disabled { opacity: .6; cursor: wait; }
+.water-touch__gate small { display: block; margin-top: 13px; color: #eefcfb75; font-size: 10px; }
+.water-touch__hint { position: absolute; bottom: max(133px, calc(env(safe-area-inset-bottom) + 120px)); left: 50%; transform: translateX(-50%); margin: 0; width: max-content; max-width: calc(100% - 32px); font-size: 11px; text-align: center; text-shadow: 0 2px 8px #071c26; pointer-events: none; }
+.water-touch__reset { position: absolute; right: 24px; bottom: max(37px, calc(env(safe-area-inset-bottom) + 20px)); border: 1px solid #ffffff55; border-radius: 30px; padding: 9px 12px; background: #18394760; color: #e7fafb; font-size: 11px; }
+.water-touch__status { position: absolute; bottom: 170px; left: 50%; transform: translateX(-50%); margin: 0; padding: 12px 16px; border-radius: 15px; background: #102e3bef; width: max-content; max-width: calc(100% - 32px); font-size: 12px; line-height: 1.6; text-align: center; }
+.water-touch__status:empty { display: none; }
+@media (max-width: 600px) {
+  .water-touch__header { left: 20px; top: max(115px, calc(env(safe-area-inset-top) + 95px)); }
+  .water-touch__header h2 { font-size: 38px; }
+  .water-touch__header p { font-size: 8px; }
+  .water-touch__readout { right: 20px; top: max(117px, calc(env(safe-area-inset-top) + 97px)); font-size: 8px; }
+  .water-touch__reset { right: 15px; font-size: 10px; }
+}
+@media (max-height: 600px) {
+  .water-touch__gate { top: 56%; padding: 16px 22px; }
+  .water-touch__symbol, .water-touch__gate .water-touch__eyebrow, .water-touch__gate small, .water-touch__header > span { display: none; }
+  .water-touch__gate h3 { margin-top: 0; font-size: 20px; }
+  .water-touch__start { margin-top: 12px; }
+  .water-touch__header { top: 105px; }
+  .water-touch__readout { top: 110px; }
+  .water-touch__hint { bottom: 100px; font-size: 10px; }
+  .water-touch__status { bottom: 125px; }
+}

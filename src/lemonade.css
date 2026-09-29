@@ -1,0 +1,76 @@
+/* Keep the shared example navigation aligned with the full 15-example menu. */
+.example-controls { grid-template-columns: repeat(5, minmax(0, 1fr)); width: min(1180px, calc(100vw - 28px)); }
+.night-sky[data-example='lemonade'] { min-height: 100dvh; background: #344234; }
+.night-sky[data-example='lemonade']::after { display: none; }
+.night-sky[data-example='lemonade'] .example-controls { background: rgba(23, 35, 26, .45); border-color: #ffffff30; box-shadow: 0 8px 30px #00000012; }
+.night-sky[data-example='lemonade'] .example-button.is-active { background: #f3efb1; border-color: #f3efb1; color: #34432e; box-shadow: none; }
+.lemonade { position: fixed; inset: 0; width: 100%; height: 100dvh; overflow: hidden; color: #fffef2; background: #344234; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.lemonade [hidden] { display: none !important; }
+.lemonade button, .lemonade a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.lemonade button { font-family: inherit; cursor: pointer; }
+.lemonade button:disabled { cursor: wait; opacity: .55; }
+.lemonade button:focus-visible, .lemonade a:focus-visible { outline: 2px solid #f5ee91; outline-offset: 5px; }
+.lemonade__camera { position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: .001; pointer-events: none; }
+.lemonade__canvas { display: block; width: 100%; height: 100%; }
+.lemonade__shade { position: absolute; inset: 0; background: linear-gradient(#14241b55, transparent 35%, transparent 65%, #14241b99); pointer-events: none; }
+.lemonade__header { position: absolute; top: max(130px, calc(env(safe-area-inset-top) + 110px)); left: 36px; pointer-events: none; text-shadow: 0 2px 15px #10201055; }
+.lemonade__header p { margin: 0 0 8px; font: 600 10px/1.4 ui-monospace, monospace; letter-spacing: .19em; opacity: .7; }
+.lemonade__header h2 { margin: 0; font: italic 500 clamp(36px, 4vw, 58px)/1 Georgia, 'Times New Roman', serif; letter-spacing: -.055em; }
+.lemonade__header h2 span { display: block; margin-top: 12px; font: 400 11px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; letter-spacing: .02em; opacity: .72; }
+.lemonade__readout { position: absolute; top: max(135px, calc(env(safe-area-inset-top) + 115px)); right: 36px; display: grid; justify-items: end; gap: 12px; font: 500 10px/1.4 ui-monospace, monospace; letter-spacing: .08em; }
+.lemonade__live { display: flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid #ffffff30; border-radius: 20px; background: #20322630; }
+.lemonade__live::before { width: 5px; height: 5px; content: ''; border-radius: 50%; background: #ffffff50; }
+.lemonade__live.is-live::before { background: #d7ec88; box-shadow: 0 0 10px #d7ec8890; }
+.lemonade__volume { opacity: .8; }
+.lemonade__gate { position: absolute; top: 52%; left: 50%; width: min(370px, calc(100% - 40px)); padding: 28px 25px; text-align: center; border: 1px solid #ffffff35; border-radius: 28px; background: #253d2bd9; backdrop-filter: blur(22px); box-shadow: 0 20px 70px #13231935; transform: translate(-50%, -50%); }
+.lemonade__gate-icon { display: block; margin-bottom: 13px; color: #f3eb8f; font: 36px/1 Georgia, serif; }
+.lemonade__eyebrow { margin: 0; color: #e9e5ae; font: 500 8px/1.5 ui-monospace, monospace; letter-spacing: .12em; }
+.lemonade__gate h3 { margin: 16px 0 12px; font-size: 24px; line-height: 1.5; font-weight: 500; letter-spacing: -.045em; }
+.lemonade__gate-copy { margin: 0; font-size: 12px; line-height: 1.9; color: #ffffffac; }
+.lemonade__start { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 23px; padding: 15px 20px; color: #31442b; background: #f1ecab; border: 0; border-radius: 50px; font-size: 13px; font-weight: 650; }
+.lemonade__start span { font-size: 19px; }
+.lemonade__gate small { display: block; margin-top: 13px; color: #ffffff60; font-size: 10px; }
+.lemonade__bottom { position: absolute; right: 35px; bottom: max(24px, env(safe-area-inset-bottom)); left: 35px; display: flex; align-items: center; justify-content: center; gap: clamp(35px, 9vw, 160px); pointer-events: none; }
+.lemonade__hand { display: flex; width: 164px; align-items: center; gap: 10px; color: #ffffff8c; }
+.lemonade__hand i { width: 7px; height: 7px; flex-shrink: 0; border: 1px solid #ffffff80; border-radius: 50%; transition: background .2s; }
+.lemonade__hand.is-tracked { color: #f5f2bd; }
+.lemonade__hand.is-tracked i { background: #eaf3a2; border-color: #eaf3a2; box-shadow: 0 0 12px #ecf8a955; }
+.lemonade__hand.is-squeezing i { background: #ffda3a; border-color: #ffda3a; }
+.lemonade__hand span { font: 500 9px/1.5 ui-monospace, monospace; letter-spacing: .12em; }
+.lemonade__hand small { display: block; margin-top: 6px; font: 400 11px/1.4 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; letter-spacing: -.015em; }
+.lemonade__tools { position: absolute; right: 30px; bottom: max(130px, calc(env(safe-area-inset-bottom) + 105px)); display: flex; gap: 7px; }
+.lemonade__tools button { padding: 8px 11px; border: 1px solid #ffffff35; border-radius: 20px; color: #fffde5bb; background: #22302140; backdrop-filter: blur(10px); font-size: 10px; }
+.lemonade__status { position: absolute; bottom: max(145px, calc(env(safe-area-inset-bottom) + 125px)); left: 50%; width: max-content; max-width: min(460px, calc(100% - 36px)); margin: 0; padding: 10px 16px; border-radius: 16px; color: #fffde4; background: #233325dc; font-size: 12px; line-height: 1.6; text-align: center; transform: translateX(-50%); pointer-events: none; }
+.lemonade__status:empty { display: none; }
+.lemonade.is-drinking .lemonade__live { color: #fff0a0; border-color: #fff0a0a0; }
+@media (max-width: 600px) {
+  .example-controls { grid-template-columns: repeat(3, minmax(0, 1fr)); width: calc(100vw - 20px); }
+  .example-button { padding-inline: 5px; font-size: clamp(.62rem, 2.5vw, .74rem); }
+  .lemonade__header { top: max(115px, calc(env(safe-area-inset-top) + 95px)); left: 20px; }
+  .lemonade__header h2 { font-size: 39px; }
+  .lemonade__header h2 span { margin-top: 8px; font-size: 10px; }
+  .lemonade__header p { font-size: 8px; }
+  .lemonade__readout { top: max(117px, calc(env(safe-area-inset-top) + 97px)); right: 20px; font-size: 9px; }
+  .lemonade__bottom { right: 15px; left: 15px; bottom: max(20px, env(safe-area-inset-bottom)); gap: 16px; }
+  .lemonade__hand { width: 100px; align-items: flex-start; gap: 6px; }
+  .lemonade__hand i { margin-top: 3px; width: 5px; height: 5px; }
+  .lemonade__hand span { font-size: 7px; letter-spacing: .08em; }
+  .lemonade__hand small { max-width: 88px; font-size: 9px; line-height: 1.7; }
+  .lemonade__tools { right: 15px; bottom: max(125px, calc(env(safe-area-inset-bottom) + 105px)); }
+  .lemonade__tools button { font-size: 9px; padding: 7px 9px; }
+  .lemonade__status { bottom: max(168px, calc(env(safe-area-inset-bottom) + 148px)); font-size: 11px; }
+}
+@media (max-height: 600px) {
+  .lemonade__gate { top: 56%; padding: 17px 23px; }
+  .lemonade__gate-icon, .lemonade__eyebrow, .lemonade__gate small { display: none; }
+  .lemonade__gate h3 { margin-top: 0; font-size: 20px; }
+  .lemonade__start { margin-top: 14px; }
+  .lemonade__header { top: 110px; }
+  .lemonade__header h2 { font-size: 32px; }
+  .lemonade__header h2 span { display: none; }
+  .lemonade__readout { top: 112px; }
+  .lemonade__bottom { bottom: max(10px, env(safe-area-inset-bottom)); }
+  .lemonade__tools { bottom: 92px; }
+  .lemonade__status { bottom: 125px; }
+}
+.lemonade__capture-space { width: 110px; height: 90px; flex-shrink: 0; }
