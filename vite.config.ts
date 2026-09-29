@@ -8,7 +8,8 @@ const https = existsSync(certificate) && existsSync(privateKey)
   ? { cert: readFileSync(certificate), key: readFileSync(privateKey) }
   : undefined
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/Interactive-Web_6/' : '/',
   server: { host: true, https },
   preview: { host: true, https },
-})
+}))

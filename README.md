@@ -7,6 +7,16 @@ npm install
 npm run dev
 ```
 
+## GitHub Pages 배포
+
+GitHub 저장소 **Settings → Pages → Build and deployment → Source**를 **GitHub Actions**로 설정합니다. 변경 사항을 `main`에 푸시하면 `.github/workflows/deploy.yml`이 의존성을 설치하고 `npm run build`로 생성한 `dist` 폴더를 배포합니다. 진행 상태는 저장소의 **Actions** 탭에서 확인합니다.
+
+배포 주소: https://youngsun-onearth.github.io/Interactive-Web_6/
+
+`vite.config.ts`는 빌드 시 `/Interactive-Web_6/`를 기본 경로로 사용합니다. 저장소 이름이나 배포 주소를 바꾸면 이 경로도 수정해야 합니다. 로컬 개발 경로는 `/`입니다.
+
+저장소 루트를 그대로 배포하면 원본 `index.html`이 `/src/main.ts`를 요청해 404와 흰 화면이 발생합니다. 반드시 빌드 결과인 `dist`를 배포하세요. `dist`를 Git에 커밋할 필요는 없습니다. 서버 없이 빌드만 확인하려면 `npm run build`를 실행합니다.
+
 ## 모든 예제의 공통 촬영
 
 화면 하단 중앙의 흰색 원형 버튼은 01–12 모든 예제에 표시됩니다. 짧게 누르면 사진을 촬영하고, 0.45초 이상 길게 누르면 동영상 촬영을 시작합니다. 다시 누르면 녹화를 종료하고 저장 미리보기를 엽니다. 촬영 중 예제를 바꾸면 같은 영상에 다음 예제도 이어서 담깁니다.
