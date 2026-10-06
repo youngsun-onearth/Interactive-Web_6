@@ -110,7 +110,7 @@ export function createCapture({ stage, getCanvas, getName, onPreviewChange, onRe
     context ??= await screenshot.createContext(stage, {
       width, height, scale: Math.min(devicePixelRatio || 1, 2, 1600 / Math.max(width, height)),
       timeout: 5000,
-      filter: (node) => !(node instanceof HTMLElement && (node.hidden || node.classList.contains('capture') || node.classList.contains('example-controls'))),
+      filter: (node) => !(node instanceof HTMLElement && (node.hidden || node.classList.contains('capture') || node.classList.contains('example-controls') || node.classList.contains('guestbook-link'))),
     })
     contextSize = size
     return screenshot.domToCanvas(context)

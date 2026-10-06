@@ -10,6 +10,11 @@ const https = existsSync(certificate) && existsSync(privateKey)
 
 export default defineConfig(({ command }) => ({
   base: command === 'build' ? '/Interactive-Web_6/' : '/',
+  build: {
+    rolldownOptions: {
+      input: { main: resolve('index.html'), guestbook: resolve('guestbook.html') },
+    },
+  },
   server: { host: true, https },
   preview: { host: true, https },
 }))

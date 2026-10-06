@@ -3106,3 +3106,23 @@ body {
     animation-duration: 1.4s;
   }
 }
+
+/* Reserve a small top row for the guestbook without covering the example menu. */
+.guestbook-link {
+  position: fixed;
+  z-index: 22;
+  top: calc(10px + env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  padding: 10px 18px;
+  border: 1px solid #ffffff40;
+  border-radius: 999px;
+  background: #161633eb;
+  color: #fff;
+  font: 600 13px/1.5 system-ui, sans-serif;
+  text-decoration: none;
+  backdrop-filter: blur(14px);
+}
+.guestbook-link:hover { background: #3d3159; }
+.guestbook-link:focus-visible { outline: 2px solid #ffd9ed; outline-offset: 4px; }
+.night-sky .example-controls { top: calc(66px + env(safe-area-inset-top)); }
+.night-sky.is-menu-collapsed .example-controls { transform: translate(-50%, calc(-100% - 110px - env(safe-area-inset-top))); }

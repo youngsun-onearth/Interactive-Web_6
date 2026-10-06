@@ -200,3 +200,91 @@ npm run test:e2e
 세로형 마네킹 AVIF 원본으로 `Aborted(). Build with -sASSERTIONS for more info.` 오류를 재현했습니다. 실패 지점은 업로드 이미지의 Pose Landmarker 분석이며, 추가 분할 마스크를 출력하는 경로에서 `image_frame.cc:415: 1 == ChannelSize() (1 vs. 4)` 검사가 실패했습니다. 업로드 이미지에는 관절 정보만 필요하므로 해당 단계의 `outputSegmentationMasks`를 끕니다. 촬영 사진에는 기존 HumanSeg·Pose 마스크 교차를 유지하며, 같은 작업자를 재사용할 때 촬영 사진 분석 전에 마스크 출력을 다시 켭니다. 결과 마스크는 예외가 발생해도 해제하고, 런타임 중단 시 개발용 빌드 문구 대신 중단 단계와 재촬영 안내를 표시합니다.
 
 실제 로컬 MediaPipe 모델로 같은 마네킹을 두 번 연속 분석하여 사람형, 얼굴 전용 사진 텍스처, 랜덤 의상까지 생성되는 것을 확인했습니다. 서버를 열지 않는 회귀 확인은 `node tests/forest-person-vision.check.mjs <사람형_참고이미지_경로> <촬영용_사람사진_경로>`로 실행할 수 있습니다. 입력 이미지는 저장소에 포함하지 않습니다.
+
+## 방명록 · Supabase 연결
+
+메인 화면 우상단의 **방명록 ↗** 버튼이 `guestbook.html`로 이동합니다. 이름(30자)과 내용(500자)을 작성하면 Supabase에 저장된 결과를 즉시 포스트잇으로 붙입니다. 다른 방문자의 새 글은 Supabase Realtime으로 받고, 연결 중 누락된 글을 보완하기 위해 30초마다 최신 목록도 조회합니다. 처음에는 최신 30개를 표시하며 **이전 방명록 더 보기**로 추가 조회합니다.
+
+기존 15개 인터랙션은 `src/main.ts`에 유지됩니다. 방명록은 별도 진입점 `src/guestbook/main.ts`로 빌드되어 카메라·3D 예제 코드를 불러오지 않습니다. GitHub Pages의 `/Interactive-Web_6/` 하위 경로를 그대로 사용하고, 별도의 애플리케이션 서버나 로그인은 필요하지 않습니다.
+
+### 1. Supabase 테이블·권한·실시간 알림 설정
+
+1. [Supabase Dashboard](https://supabase.com/dashboard)에서 생성해 둔 프로젝트를 엽니다.
+2. **SQL Editor → New query**를 엽니다.
+3. 이 저장소의 [`supabase/guestbook.sql`](supabase/guestbook.sql)을 열어 **전체 내용**을 복사합니다.
+4. SQL Editor에 붙여넣고 **Run**을 누릅니다. 성공 메시지가 표시되어야 합니다.
+5. **Table Editor**에서 `public.guestbook_entries`가 생겼는지 확인합니다. 열은 `id`, `name`, `message`, `created_at`입니다.
+6. **Database → Publications → supabase_realtime**에서 `guestbook_entries`가 포함되어 있는지 확인합니다. 위 SQL이 이미 등록하므로 보통 별도 토글 설정은 필요하지 않습니다.
+
+SQL은 RLS를 켜고 방문자에게 조회·추가만 허용합니다. 이름과 내용의 길이도 데이터베이스에서 검사하고, 작성 시각은 데이터베이스가 생성합니다. 방문자에게 수정·삭제 권한은 없습니다. 동일 SQL을 다시 실행해도 기존 글은 삭제되지 않습니다. 단, 같은 이름으로 다른 구조의 테이블을 미리 만든 경우에는 자동 변환하지 않으므로 오류 내용을 먼저 확인하세요.
+
+### 2. 프로젝트 URL과 공개 키 확인
+
+1. Supabase 프로젝트의 **Connect** 창에서 **Project URL**을 복사합니다. 찾기 어려우면 **Project Settings → Data API**에서도 확인할 수 있습니다. 형식은 `https://프로젝트참조값.supabase.co`입니다. PostgreSQL 연결 문자열을 사용하지 않습니다.
+2. **Project Settings → API Keys**에서 `sb_publishable_...`로 시작하는 **Publishable key**를 복사합니다.
+3. 구형 프로젝트의 `anon` 공개 키도 같은 환경변수에 넣어 사용할 수 있습니다.
+
+브라우저에서 쓰는 공개 키는 배포된 코드에 포함됩니다. 데이터 접근 제한은 1단계의 RLS·테이블 권한이 담당합니다. **Secret key(`sb_secret_...`), `service_role` 키, 데이터베이스 비밀번호는 넣지 마세요.** 이 기능은 Supabase Auth 로그인을 사용하지 않으므로 Auth의 Site URL이나 Redirect URL을 등록할 필요가 없습니다. 공개 키와 비공개 키의 차이는 [Supabase API keys 문서](https://supabase.com/docs/guides/getting-started/api-keys)를 참고하세요.
+
+### 3. GitHub Pages 배포용 변수 등록
+
+로컬 `.env.local`은 GitHub에 올라가지 않으므로 **배포용 값은 GitHub에도 따로 등록**해야 합니다.
+
+1. GitHub의 이 저장소에서 **Settings → Secrets and variables → Actions → Variables**를 엽니다.
+2. **New repository variable**을 눌러 아래 두 개를 정확한 이름으로 만듭니다. **Secrets 탭이 아닌 Variables 탭**입니다. 값에 따옴표를 붙이지 마세요.
+
+   | Name | Value |
+   | --- | --- |
+   | `VITE_SUPABASE_URL` | 2단계의 Project URL |
+   | `VITE_SUPABASE_PUBLISHABLE_KEY` | 2단계의 Publishable key 또는 legacy anon 키 |
+
+3. **Settings → Pages → Build and deployment → Source**가 **GitHub Actions**인지 확인합니다.
+4. 이번 변경 파일을 커밋하고 `main` 브랜치로 푸시합니다. 코드 변경과 배포 변수는 이 작업에서 자동으로 원격 저장소에 반영하지 않았습니다.
+5. **Actions → Deploy to GitHub Pages**에서 `build`와 `deploy` 작업이 모두 성공했는지 확인합니다.
+6. 이미 코드가 올라간 뒤 변수를 등록했다면 **Actions → Deploy to GitHub Pages → Run workflow → main → Run workflow**로 다시 빌드·배포합니다. 환경변수 변경은 기존 배포에 즉시 적용되지 않습니다.
+7. 배포된 [방명록 페이지](https://youngsun-onearth.github.io/Interactive-Web_6/guestbook.html)를 엽니다.
+
+`.github/workflows/deploy.yml`이 위 Variables를 빌드에 전달하도록 구성되어 있습니다. 설정이 비어 있거나 잘못된 키 종류이면 방명록은 준비 중 안내를 표시하고 작성 폼을 비활성화합니다. 기존 메인 페이지는 계속 이용할 수 있습니다.
+
+### 4. 로컬에서 확인하려면 (선택)
+
+1. 프로젝트 루트에서 `.env.example`을 복사해 `.env.local` 파일을 만듭니다.
+2. 아래 값에 실제 Project URL과 공개 키를 넣습니다.
+
+   ```dotenv
+   VITE_SUPABASE_URL=https://프로젝트참조값.supabase.co
+   VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_실제공개키
+   ```
+
+3. 터미널에서 `npm install`을 실행합니다.
+4. 사용자가 직접 `npm run dev`를 실행하고 터미널에 표시된 주소에서 방명록 버튼을 누릅니다. 이미 개발 서버가 켜져 있었다면 환경변수를 읽도록 재시작합니다.
+5. 서버 없이 코드만 확인하려면 `npm run build`와 `npm test`를 실행합니다. 기존 `npm run test:e2e`는 서버 자동 실행 설정이 있으므로 이 절차에는 사용하지 않습니다.
+
+`.env.local`은 Git 추적에서 제외됩니다. 여기에 넣은 공개 키 역시 브라우저용 빌드에는 포함됩니다.
+
+### 5. 실제 연결 확인 순서
+
+1. 메인 페이지 우상단 **방명록** 버튼으로 이동합니다.
+2. 이름과 내용을 적고 **작성하기**를 누릅니다. 저장 완료 안내와 새 포스트잇이 나타나는지 확인합니다.
+3. 페이지를 새로고침해도 글이 남아 있는지 확인합니다.
+4. Supabase **Table Editor → guestbook_entries**에서도 같은 글을 확인합니다.
+5. 같은 방명록을 다른 브라우저나 휴대폰에서도 열어 둡니다. 한쪽에서 작성하면 다른 쪽에도 새로고침 없이 포스트잇이 나타나야 합니다.
+6. `guestbook.html` 주소를 직접 열거나 새로고침해도 정상 표시되는지 확인합니다.
+
+실제 Supabase URL·공개 키가 제공되지 않은 상태에서는 원격 저장·실시간 전달 확인을 완료할 수 없습니다. 위 확인은 SQL 실행과 환경변수 등록 후 수행하세요.
+
+### 문제 해결과 관리
+
+| 증상 | 확인할 내용 |
+| --- | --- |
+| “방명록을 준비하고 있어요” | GitHub **Variables**의 변수 이름·값을 확인하고 다시 배포합니다. 로컬은 `.env.local` 저장 후 개발 서버를 재시작합니다. |
+| 목록 조회 또는 저장 실패 | Supabase 프로젝트가 활성 상태인지, URL과 키가 같은 프로젝트인지, SQL 전체가 성공했는지 확인합니다. 브라우저 개발자 도구 Network의 `guestbook_entries` 요청 응답도 확인합니다. |
+| `401` / invalid API key | 공개 키와 URL을 다시 복사합니다. 키를 교체했다면 다시 빌드·배포합니다. |
+| `403` / `42501` | RLS 정책과 `SELECT`/`INSERT` 권한을 확인합니다. 제공한 SQL을 다시 실행할 수 있습니다. |
+| 테이블 없음 / `PGRST205` | 같은 Supabase 프로젝트에서 SQL을 실행했는지, 테이블 이름이 `guestbook_entries`인지 확인합니다. |
+| 내 글은 보이지만 다른 기기에 즉시 나타나지 않음 | `supabase_realtime` publication에 테이블이 포함되어 있는지와 WebSocket 연결을 확인합니다. 30초 후에만 보이면 Realtime 설정을 점검하세요. |
+| Pages에서 404 | 이번 `vite.config.ts`와 `guestbook.html`이 함께 배포되었는지, Actions 배포가 성공했는지 확인합니다. |
+
+불필요한 글은 프로젝트 관리자가 Supabase **Table Editor**에서 삭제할 수 있습니다. 이미 열려 있는 화면에서는 페이지를 다시 열어 삭제 결과를 확인합니다. 현재 구현은 누구나 읽고 작성하는 공개 방명록이며, 이름은 본인 인증을 거치지 않습니다. RLS는 타인의 글 수정·삭제를 막지만 자동 도배를 제한하는 장치는 아닙니다. CAPTCHA·서버 측 작성 제한·승인 대기 기능은 이번 범위에 포함하지 않았습니다.
+
+구현 참고: [Supabase RLS](https://supabase.com/docs/guides/database/postgres/row-level-security), [Postgres Changes](https://supabase.com/docs/guides/realtime/postgres-changes), [JavaScript insert](https://supabase.com/docs/reference/javascript/insert), [Vite 다중 페이지 빌드](https://vite.dev/guide/build.html#multi-page-app).

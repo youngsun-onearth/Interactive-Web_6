@@ -70,6 +70,7 @@ type ClawMachineController = {
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <main class="night-sky" data-example="heart">
+    <a class="guestbook-link" href="${import.meta.env.BASE_URL}guestbook.html">방명록 ↗</a>
     <button class="example-menu-toggle" type="button" aria-controls="example-menu" aria-expanded="true">예제 목록 접기 ⌃</button>
     <nav id="example-menu" class="example-controls" aria-label="인터랙션 예제 선택">
       <button class="example-button is-active" type="button" data-example="heart" aria-pressed="true">
