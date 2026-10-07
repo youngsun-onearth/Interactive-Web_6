@@ -1955,13 +1955,23 @@ const launchHeldHeart = (pointerId: number) => {
   heldHearts.delete(pointerId)
 }
 
+// Leave navigation and form controls to the browser. Capturing their pointer
+// on the stage would retarget the click away from the original control.
+const isInterfaceTarget = (target: EventTarget | null) =>
+  target instanceof Element && Boolean(target.closest(
+    '.example-controls, a[href], button, input, textarea, select, [role="button"], [contenteditable]',
+  ))
+
 nightSky.addEventListener('pointermove', (event) => {
+  if (isInterfaceTarget(event.target)) {
+    previousPointerPositions.delete(event.pointerId)
+    return
+  }
   if (activeExample === 'gaze') {
     scheduleGaze(event.clientX, event.clientY)
     return
   }
   if (activeExample !== 'heart') return
-  if (event.target instanceof Node && controls.contains(event.target)) return
 
   const previous = previousPointerPositions.get(event.pointerId)
   const now = performance.now()
@@ -1983,6 +1993,7 @@ nightSky.addEventListener('pointermove', (event) => {
 nightSky.addEventListener('pointerdown', (event) => {
   if (
     event.button !== 0 ||
+    isInterfaceTarget(event.target) ||
     activeExample === 'sampler' ||
     activeExample === 'claw' ||
     activeExample === 'lemonade' ||
@@ -1994,8 +2005,7 @@ nightSky.addEventListener('pointerdown', (event) => {
     activeExample === 'animal-forest' ||
     activeExample === 'animal-forest-extended' ||
     activeExample === 'animal-forest-edition' ||
-    heldHearts.has(event.pointerId) ||
-    (event.target instanceof Node && controls.contains(event.target))
+    heldHearts.has(event.pointerId)
   ) {
     return
   }
