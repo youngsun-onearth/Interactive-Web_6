@@ -72,8 +72,8 @@ test('all thirteen panels switch without spawning heart effects in Lemonade', as
   await page.locator('.example-button[data-example="gaze"]').click()
   await expect(page.locator('.lemonade')).toBeHidden()
   await expect(page.locator('.gaze-example')).toBeVisible()
-  await page.locator('.example-button[data-example="sampler"]').click()
-  await expect(page.locator('.sampler')).toBeVisible()
+  await page.locator('.example-button[data-example="playground"]').click()
+  await expect(page.locator('.playground')).toBeVisible()
 })
 
 test('camera permission rejection is recoverable', async ({ page }) => {

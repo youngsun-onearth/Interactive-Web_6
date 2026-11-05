@@ -1,0 +1,135 @@
+.night-sky[data-example='walker'] {
+  background: #d5e0e3;
+  touch-action: none;
+}
+
+.night-sky[data-example='walker']::after { display: none; }
+
+.bubble-wrap {
+  position: fixed;
+  z-index: 8;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  background:
+    repeating-linear-gradient(0deg, #ffffff0b 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, #8ca5af08 0 1px, transparent 1px 3px),
+    linear-gradient(135deg, #e5edef, #cbd9de 65%, #d9e4e7);
+}
+
+.bubble-wrap__bubble {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bubble-wrap__bubble::before {
+  position: absolute;
+  inset: 8%;
+  content: '';
+  border-radius: 49% 51% 48% 52%;
+  border: 1px solid #a8bbc080;
+  background: radial-gradient(ellipse at 48% 50%, #d3e0e5aa 55%, #c3d1d680 69%, #f4f8fa8c 72%, #c5d6dc45 77%);
+  box-shadow: 0 1px 1px #ffffffc9, inset 0 1px 2px #7f9da354, 0 -1px 1px #f8fcfd80;
+}
+
+.bubble-wrap__dome {
+  position: absolute;
+  inset: 12%;
+  border: 1px solid #f4faff96;
+  border-radius: 48% 52% 50% 49%;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 29% 23%, #ffffffd9, #ffffff55 15%, transparent 34%),
+    radial-gradient(ellipse at 66% 78%, #eefaff96, transparent 31%),
+    radial-gradient(ellipse at 42% 35%, #f4f9fa91 12%, #e0eced94 42%, #bbd0d7ad 70%, #92acb7ad 85%, #e9f4f7a6 100%);
+  box-shadow:
+    3px 5px 5px #7b98a459,
+    1px 1px 1px #819fa65c,
+    inset 3px 3px 5px #ffffffd9,
+    inset -3px -5px 7px #6f909d5e;
+}
+
+.bubble-wrap__dome::before {
+  position: absolute;
+  content: '';
+  top: 10%;
+  left: 17%;
+  width: 56%;
+  height: 26%;
+  border-top: 3px solid #ffffffe6;
+  border-radius: 50%;
+  transform: rotate(calc(-28deg + var(--bubble-tilt)));
+  filter: blur(0.6px);
+}
+
+.bubble-wrap__dome::after {
+  position: absolute;
+  content: '';
+  bottom: 13%;
+  right: 17%;
+  width: 26%;
+  height: 12%;
+  border-bottom: 2px solid #f5ffffb3;
+  border-radius: 50%;
+  transform: rotate(-28deg);
+  filter: blur(1px);
+}
+
+.bubble-wrap__crease {
+  position: absolute;
+  inset: 15%;
+  border-radius: 47% 51% 49% 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: rotate(var(--bubble-tilt));
+  background:
+    linear-gradient(32deg, transparent 39%, #8aa3af4d 41%, #f5ffffa6 43%, transparent 46%),
+    linear-gradient(148deg, transparent 43%, #8ba3ad4d 45%, #ffffff8c 47%, transparent 50%),
+    conic-gradient(from 24deg at 39% 56%, transparent 0deg, #a0b6bf70 42deg, #f5ffff99 45deg, transparent 52deg 180deg, #a7bbc559 216deg, #ffffff80 220deg, transparent 228deg),
+    radial-gradient(ellipse at 53% 58%, #bed0d980, #dbe7eb4d 65%, #f3f9fa66);
+  box-shadow: inset 1px 2px 4px #839eaa47, 0 1px 1px #f8ffffa6;
+}
+
+.bubble-wrap__bubble:focus-visible::before {
+  outline: 2px solid #527d91;
+  outline-offset: 3px;
+}
+
+/* Navigation stays available without adding visible text to the bubble sheet. */
+.night-sky[data-example='walker'] .example-menu-toggle {
+  width: 44px;
+  height: 30px;
+  padding: 0;
+  border-radius: 999px;
+  border-color: #ffffffbf;
+  background: #edf4f6d9;
+  color: #577581;
+  font-size: 0;
+  box-shadow: 0 2px 8px #52727e26;
+}
+.night-sky[data-example='walker'].is-menu-collapsed .example-menu-toggle {
+  top: max(8px, env(safe-area-inset-top));
+}
+.night-sky[data-example='walker'] .example-menu-toggle::after {
+  display: block;
+  width: 27px;
+  height: 6px;
+  margin: auto;
+  content: '';
+  background: radial-gradient(circle, currentColor 1.5px, transparent 2px) 0 0 / 9px 6px repeat-x;
+}

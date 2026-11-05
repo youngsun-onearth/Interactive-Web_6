@@ -287,7 +287,7 @@ export function createCapture({ stage, getCanvas, getName, onPreviewChange, onRe
     clearTimeout(holdTimer); if (!cancelled && !longPressed) void takePhoto()
     pointer = null; keyboardHeld = false
   }
-  // These controls must not trigger sampler shortcuts, claw drops, or heart effects.
+  // These controls must not trigger claw drops, or heart effects.
   for (const event of ['pointerdown', 'pointermove', 'pointerup', 'keydown', 'keyup']) root.addEventListener(event, (e) => e.stopPropagation())
   shutter.addEventListener('pointerdown', (event) => {
     if (event.button !== 0 || pointer !== null || keyboardHeld || shutter.disabled) return

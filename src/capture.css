@@ -34,7 +34,6 @@
 /* Keep the shared shutter clear of the bottom-center game controls. */
 .typing-person { bottom: 128px; }
 .claw-machine__guide { bottom: 130px; }
-.sampler { padding-bottom: max(130px, calc(env(safe-area-inset-bottom) + 110px)); }
 @media (max-width: 600px) {
   .capture__capture-group { bottom: max(20px, env(safe-area-inset-bottom)); }
   .capture__shutter { width: 62px; height: 62px; }
@@ -44,17 +43,4 @@
   .capture__capture-group { bottom: max(10px, env(safe-area-inset-bottom)); }
   .capture__shutter { width: 50px; height: 50px; }
   .typing-person { bottom: 100px; }
-  .sampler { padding-bottom: 100px; }
-}
-/* Sampler content scrolls above the persistent capture dock. */
-.night-sky[data-example='sampler'] { background: #0b0c11; }
-.sampler {
-  bottom: max(115px, calc(env(safe-area-inset-bottom) + 100px));
-  padding-bottom: 16px;
-  grid-template-rows: repeat(4, max-content);
-  align-content: start;
-  overflow-y: auto;
-}
-@media (max-height: 600px) {
-  .sampler { bottom: max(90px, calc(env(safe-area-inset-bottom) + 75px)); }
 }

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-for (const mode of ['heart', 'walker', 'gaze', 'typing', 'claw', 'sampler', 'lemonade', 'water']) {
+for (const mode of ['heart', 'walker', 'gaze', 'typing', 'claw', 'playground', 'lemonade', 'water']) {
   test(`shared shutter captures ${mode} without camera permission`, async ({ page }) => {
     if (mode === 'claw') test.setTimeout(120000)
     const errors: string[] = []
@@ -8,6 +8,7 @@ for (const mode of ['heart', 'walker', 'gaze', 'typing', 'claw', 'sampler', 'lem
     await page.goto('/')
     await page.locator(`.example-button[data-example="${mode}"]`).click()
     if (mode === 'claw') await expect(page.locator('.claw-machine__viewport canvas')).toBeVisible({ timeout: 90000 })
+    if (mode === 'playground') await expect(page.locator('.pg-viewport canvas')).toBeVisible()
     const shutter = page.locator('.capture__shutter')
     await expect(shutter).toHaveCount(1)
     await expect(shutter).toBeVisible()
@@ -26,18 +27,18 @@ for (const mode of ['heart', 'walker', 'gaze', 'typing', 'claw', 'sampler', 'lem
   })
 }
 
-test('recording continues across examples and the shutter does not activate sampler shortcuts', async ({ page }) => {
+test('recording continues across examples and the playground entry remains open', async ({ page }) => {
   await page.setViewportSize({ width: 391, height: 845 })
   await page.goto('/')
   const shutter = page.locator('.capture__shutter')
   await shutter.hover(); await page.mouse.down(); await page.waitForTimeout(550); await page.mouse.up()
   await expect(shutter).toHaveClass(/is-recording/, { timeout: 20000 })
-  await page.locator('.example-button[data-example="sampler"]').click()
+  await page.locator('.example-button[data-example="playground"]').click()
   await expect(shutter).toHaveClass(/is-recording/)
   await page.waitForTimeout(1100)
   await shutter.focus(); await page.keyboard.press('Space')
   await expect(page.locator('.capture__result')).toBeVisible()
-  await expect(page.locator('.sampler__loop-record')).toHaveAttribute('aria-pressed', 'false')
+  await expect(page.locator('.pg-entry')).toBeVisible()
   const video = page.locator('.capture__preview video')
   await video.evaluate((v: HTMLVideoElement) => v.play())
   expect(await video.evaluate((v: HTMLVideoElement) => v.videoWidth)).toBeGreaterThan(300)
