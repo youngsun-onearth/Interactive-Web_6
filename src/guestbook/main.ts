@@ -1,3 +1,4 @@
+import '../compatibility'
 import './style.css'
 import { createGuestbookApi } from './api'
 import { mergeEntries, validateEntry, publicConfig, fetchRecentEntries, PAGE_SIZE } from './model'

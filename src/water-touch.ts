@@ -1,3 +1,4 @@
+import { createTrackingFrame, releaseTrackingFrame, postTrackingFrame } from './vision-frame'
 import './water-touch.css'
 import type { HandLandmarker } from '@mediapipe/tasks-vision'
 import { coverPoint } from './lemonade-physics'
@@ -24,7 +25,7 @@ export function createWaterTouch(root: HTMLElement) {
   root.innerHTML = `
     <video class="water-touch__camera" muted autoplay playsinline aria-hidden="true"></video>
     <canvas class="water-touch__canvas" aria-label="열 손가락의 물결로 굴절되는 카메라 화면"></canvas>
-    <header class="water-touch__header"><p>HAND INTERACTION / 08</p><h2>WaterTouch</h2><span>Make a little ripple.</span></header>
+    <header class="water-touch__header"><p>HAND INTERACTION / 07</p><h2>WaterTouch</h2><span>Make a little ripple.</span></header>
     <div class="water-touch__readout"><span class="water-touch__live">CAMERA OFF</span><span class="water-touch__count" aria-live="polite">0 / 10 FINGERTIPS</span></div>
     <div class="water-touch__gate">
       <div class="water-touch__symbol" aria-hidden="true">◎</div>
@@ -256,11 +257,17 @@ export function createWaterTouch(root: HTMLElement) {
       catch { failTracking() }
       return
     }
+    const worker = trackingWorker
+    if (!worker) return
     detecting = true
-    void createImageBitmap(input).then((bitmap) => {
-      if (!ready || !trackingWorker) { bitmap.close(); detecting = false; return }
-      trackingWorker.postMessage({ type: 'frame', bitmap, timestamp: now, width: iw, height: ih }, [bitmap])
-    }).catch(() => failTracking())
+    void createTrackingFrame(input).then((bitmap) => {
+      if (!active || !ready || trackingWorker !== worker) {
+        releaseTrackingFrame(bitmap)
+        if (trackingWorker === worker) detecting = false
+        return
+      }
+      postTrackingFrame(worker, { type: 'frame', bitmap, timestamp: now, width: iw, height: ih })
+    }).catch(() => { if (trackingWorker === worker) failTracking() })
   }
 
   function animate(now: number) {

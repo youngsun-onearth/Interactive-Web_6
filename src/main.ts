@@ -1,20 +1,22 @@
+import './compatibility'
 import './style.css'
 import { createFireworks } from './fireworks'
 import { createBubbleWrap } from './bubble-wrap'
-import { createLemonade } from './lemonade'
 import { createCapture } from './capture'
-import { createWaterTouch } from './water-touch'
-import { createBalloon } from './balloon'
-import { createDoodleFace } from './doodle-face'
-import { createRubberHuman } from './rubber-human'
-import { createShampoo } from './shampoo'
+import './water-touch.css'
+import './lemonade.css'
+import './snow/style.css'
+import './doodle-face.css'
+import './rubber-human.css'
+import './shampoo.css'
+import { createLazyExample } from './lazy-example'
 
 const STAR_COUNT = 100
 
-type ExampleMode = 'heart' | 'walker' | 'gaze' | 'typing' | 'claw' | 'playground' | 'lemonade' | 'water' | 'balloon' | 'doodle-face' | 'rubber-human' | 'shampoo' | 'animal-forest' | 'animal-forest-extended' | 'animal-forest-edition'
+type ExampleMode = 'heart' | 'walker' | 'gaze' | 'typing' | 'claw' | 'playground' | 'water' | 'lemonade' | 'snow' | 'doodle-face' | 'rubber-human' | 'shampoo' | 'animal-forest' | 'animal-forest-extended' | 'animal-forest-edition'
 
 // Temporary display settings. Keep the other examples and features available for restoration.
-const VISIBLE_EXAMPLES: readonly ExampleMode[] = ['heart', 'walker', 'gaze', 'typing', 'claw', 'playground']
+const VISIBLE_EXAMPLES: readonly ExampleMode[] = ['heart', 'walker', 'gaze', 'typing', 'claw', 'playground', 'water', 'snow']
 const SHOW_GUESTBOOK = false
 const SHOW_CAPTURE = false
 
@@ -60,14 +62,14 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <button class="example-button" type="button" data-example="playground" aria-pressed="false">
         <span>06</span> 놀이터
       </button>
-      <button class="example-button" type="button" data-example="lemonade" aria-pressed="false">
-        <span>07</span> Lemonade
-      </button>
       <button class="example-button" type="button" data-example="water" aria-pressed="false">
-        <span>08</span> WaterTouch
+        <span>07</span> WaterTouch
       </button>
-      <button class="example-button" type="button" data-example="balloon" aria-pressed="false">
-        <span>09</span> Balloon
+      <button class="example-button" type="button" data-example="lemonade" aria-pressed="false">
+        <span>08</span> Lemonade
+      </button>
+      <button class="example-button" type="button" data-example="snow" aria-pressed="false">
+        <span>08</span> Snow
       </button>
       <button class="example-button" type="button" data-example="doodle-face" aria-pressed="false">
         <span>10</span> DoodleFace
@@ -215,9 +217,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <p class="claw-machine__guide">DRAG · ROTATE &nbsp;&nbsp; ARROW KEYS · MOVE &nbsp;&nbsp; SPACE · DROP</p>
     </section>
     <section class="playground example-panel" data-example-panel="playground" aria-label="함께 노는 3D 놀이터" hidden></section>
-    <section class="lemonade example-panel" data-example-panel="lemonade" aria-label="손으로 만드는 Lemonade" hidden></section>
     <section class="water-touch example-panel" data-example-panel="water" aria-label="열 손가락으로 물결을 만드는 WaterTouch" hidden></section>
-    <section class="balloon example-panel" data-example-panel="balloon" aria-label="손으로 터뜨리고 끈을 잡는 풍선" hidden></section>
+    <section class="lemonade example-panel" data-example-panel="lemonade" aria-label="손으로 만드는 Lemonade" hidden></section>
+    <section class="snow example-panel" data-example-panel="snow" aria-label="구름에서 내리는 눈과 입김으로 그리는 Snow" hidden></section>
     <section class="doodle-face example-panel" data-example-panel="doodle-face" aria-label="한 카메라로 두 사람이 서로의 얼굴에 그림을 그리는 DoodleFace" hidden></section>
     <section class="rubber-human example-panel" data-example-panel="rubber-human" aria-label="핀치로 얼굴을 부드럽게 늘리는 고무 인간" hidden></section>
     <section class="shampoo example-panel" data-example-panel="shampoo" aria-label="머리 위에 쌓인 거품이 얼굴을 따라움직이는 Shampoo" hidden></section>
@@ -260,12 +262,12 @@ new ResizeObserver(sizeMenu).observe(controls)
 window.addEventListener('resize', sizeMenu)
 try { setMenuCollapsed(localStorage.getItem('example-menu-collapsed') === 'true') } catch { setMenuCollapsed(false) }
 sizeMenu()
-const lemonade = createLemonade(document.querySelector<HTMLElement>('.lemonade')!)
-const waterTouch = createWaterTouch(document.querySelector<HTMLElement>('.water-touch')!)
-const balloon = createBalloon(document.querySelector<HTMLElement>('.balloon')!)
-const doodleFace = createDoodleFace(document.querySelector<HTMLElement>('.doodle-face')!)
-const rubberHuman = createRubberHuman(document.querySelector<HTMLElement>('.rubber-human')!)
-const shampoo = createShampoo(document.querySelector<HTMLElement>('.shampoo')!)
+const lemonade = createLazyExample(document.querySelector<HTMLElement>('.lemonade')!, () => import('./lemonade').then(module => module.createLemonade), () => activeExample === 'lemonade')
+const waterTouch = createLazyExample(document.querySelector<HTMLElement>('.water-touch')!, () => import('./water-touch').then(module => module.createWaterTouch), () => activeExample === 'water')
+const snow = createLazyExample(document.querySelector<HTMLElement>('.snow')!, () => import('./snow/main').then(module => module.createSnow), () => activeExample === 'snow')
+const doodleFace = createLazyExample(document.querySelector<HTMLElement>('.doodle-face')!, () => import('./doodle-face').then(module => module.createDoodleFace), () => activeExample === 'doodle-face')
+const rubberHuman = createLazyExample(document.querySelector<HTMLElement>('.rubber-human')!, () => import('./rubber-human').then(module => module.createRubberHuman), () => activeExample === 'rubber-human')
+const shampoo = createLazyExample(document.querySelector<HTMLElement>('.shampoo')!, () => import('./shampoo').then(module => module.createShampoo), () => activeExample === 'shampoo')
 const examplePanels = document.querySelectorAll<HTMLElement>('[data-example-panel]')
 const gazeCharacter = document.querySelector<HTMLElement>('.gaze-character')!
 const gazeOrb = document.querySelector<HTMLElement>('.gaze-orb')!
@@ -360,19 +362,19 @@ const capture = SHOW_CAPTURE ? createCapture({
   getCanvas: () => activeExample === 'animal-forest-edition' ? editionForest?.captureFrame() ?? null : activeExample === 'animal-forest-extended' ? extendedForest?.captureFrame() ?? null : activeExample === 'animal-forest' ? forest?.captureFrame() ?? null : activeExample === 'lemonade'
     ? lemonade.captureFrame()
     : activeExample === 'water' ? waterTouch.captureFrame()
-      : activeExample === 'balloon' ? balloon.captureFrame()
+      : activeExample === 'snow' ? snow.captureFrame()
         : activeExample === 'doodle-face' ? doodleFace.captureFrame()
           : activeExample === 'rubber-human' ? rubberHuman.captureFrame()
             : activeExample === 'shampoo' ? shampoo.captureFrame()
     : activeExample === 'playground' ? playground?.canvas ?? null
     : activeExample === 'claw' ? clawMachineElement.querySelector<HTMLCanvasElement>('canvas') : null,
-  getName: () => activeExample === 'animal-forest-edition' ? 'Animal-Forest-Edition' : activeExample === 'animal-forest-extended' ? 'Animal-Forest-Extended' : activeExample === 'animal-forest' ? 'Animal-Forest' : activeExample === 'shampoo' ? 'Shampoo' : activeExample === 'rubber-human' ? 'Rubber-Human' : activeExample === 'doodle-face' ? 'DoodleFace' : activeExample === 'balloon' ? 'Balloon' : activeExample === 'water' ? 'WaterTouch' : activeExample === 'lemonade' ? 'Lemonade' : `Example-${activeExample}`,
+  getName: () => activeExample === 'animal-forest-edition' ? 'Animal-Forest-Edition' : activeExample === 'animal-forest-extended' ? 'Animal-Forest-Extended' : activeExample === 'animal-forest' ? 'Animal-Forest' : activeExample === 'shampoo' ? 'Shampoo' : activeExample === 'rubber-human' ? 'Rubber-Human' : activeExample === 'doodle-face' ? 'DoodleFace' : activeExample === 'snow' ? 'Snow' : activeExample === 'water' ? 'WaterTouch' : activeExample === 'lemonade' ? 'Lemonade' : `Example-${activeExample}`,
   onPreviewChange: (open) => {
     if (activeExample === 'animal-forest') forest?.setPaused(open)
     if (activeExample === 'animal-forest-extended') extendedForest?.setPaused(open)
     if (activeExample === 'animal-forest-edition') editionForest?.setPaused(open)
     if (activeExample === 'water') waterTouch.setPaused(open)
-    if (activeExample === 'balloon') balloon.setPaused(open)
+    if (activeExample === 'snow') snow.setPaused(open)
     if (activeExample === 'doodle-face') doodleFace.setPaused(open)
     if (activeExample === 'rubber-human') rubberHuman.setPaused(open)
     if (activeExample === 'shampoo') shampoo.setPaused(open)
@@ -1014,7 +1016,7 @@ const setExampleRenderingActive = (mode: ExampleMode) => {
 
   fireworks.setActive(mode === 'heart')
   bubbleWrap.setActive(mode === 'walker')
-  stars.hidden = mode === 'walker' || mode === 'typing' || mode === 'claw' || mode === 'playground' || mode === 'lemonade' || mode === 'water' || mode === 'balloon' || mode === 'doodle-face' || mode === 'rubber-human' || mode === 'shampoo' || mode === 'animal-forest' || mode === 'animal-forest-extended' || mode === 'animal-forest-edition'
+  stars.hidden = mode === 'walker' || mode === 'typing' || mode === 'claw' || mode === 'playground' || mode === 'lemonade' || mode === 'water' || mode === 'snow' || mode === 'doodle-face' || mode === 'rubber-human' || mode === 'shampoo' || mode === 'animal-forest' || mode === 'animal-forest-extended' || mode === 'animal-forest-edition'
 }
 
 setExampleRenderingActive(activeExample)
@@ -1042,18 +1044,18 @@ exampleButtons.forEach((button) => {
     else extendedForest?.stop()
     if (activeExample === 'animal-forest-edition') startEditionForest()
     else editionForest?.stop()
-    if (activeExample === 'lemonade') lemonade.start()
-    else lemonade.stop()
     if (activeExample === 'water') waterTouch.start()
     else waterTouch.stop()
-    if (activeExample === 'balloon') balloon.start()
-    else balloon.stop()
+    if (activeExample === 'snow') snow.start()
+    else snow.stop()
     if (activeExample === 'doodle-face') doodleFace.start()
     else doodleFace.stop()
     if (activeExample === 'rubber-human') rubberHuman.start()
     else rubberHuman.stop()
     if (activeExample === 'shampoo') shampoo.start()
     else shampoo.stop()
+    if (activeExample === 'lemonade') lemonade.start()
+    else lemonade.stop()
 
     if (activeExample === 'typing') {
       startTypingGame()

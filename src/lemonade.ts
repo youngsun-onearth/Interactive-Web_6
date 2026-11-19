@@ -26,7 +26,7 @@ export function createLemonade(root: HTMLElement) {
     <canvas class="lemonade__canvas" aria-label="카메라 위에 떠 있는 레몬과 투명한 컵"></canvas>
     <div class="lemonade__shade" aria-hidden="true"></div>
     <header class="lemonade__header">
-      <p>HAND INTERACTION / 07</p><h2>Lemonade<span> Freshly squeezed, by you.</span></h2>
+      <p>HAND INTERACTION / 08</p><h2>Lemonade<span> Freshly squeezed, by you.</span></h2>
     </header>
     <div class="lemonade__readout"><span class="lemonade__live">CAMERA OFF</span><span class="lemonade__volume">0 / 300 ml</span></div>
     <div class="lemonade__gate">

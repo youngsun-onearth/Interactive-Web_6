@@ -79,7 +79,7 @@ body {
   max-width: calc(100vw - 28px);
   padding: 7px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 999px;
+  border-radius: 24px;
   background: rgba(7, 8, 30, 0.58);
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(14px);
@@ -2080,3 +2080,9 @@ body {
 .guestbook-link:focus-visible { outline: 2px solid #ffd9ed; outline-offset: 4px; }
 .night-sky:has(.guestbook-link:not([hidden])) .example-controls { top: calc(66px + env(safe-area-inset-top)); }
 .night-sky.is-menu-collapsed:has(.guestbook-link:not([hidden])) .example-controls { transform: translate(-50%, calc(-100% - 110px - env(safe-area-inset-top))); }
+
+/* Keep viewport-sized scenes usable in older embedded browser engines. */
+@supports not (height: 100dvh) {
+  .night-sky { min-height: 100vh; }
+  .example-panel { height: 100vh; min-height: 100vh; }
+}

@@ -1,7 +1,8 @@
+import { releaseTrackingFrame, type TrackingFrame } from './vision-frame'
 import { FilesetResolver, HandLandmarker } from '@mediapipe/tasks-vision'
 
 type InitMessage = { type: 'init'; wasmPath: string; modelPath: string }
-type FrameMessage = { type: 'frame'; bitmap: ImageBitmap; timestamp: number; width: number; height: number }
+type FrameMessage = { type: 'frame'; bitmap: TrackingFrame; timestamp: number; width: number; height: number }
 type CloseMessage = { type: 'close' }
 
 let detector: HandLandmarker | null = null
@@ -57,6 +58,6 @@ self.addEventListener('message', async (event: MessageEvent<InitMessage | FrameM
   } catch (error) {
     self.postMessage({ type: 'error', message: error instanceof Error ? error.message : String(error) })
   } finally {
-    bitmap.close()
+    releaseTrackingFrame(bitmap)
   }
 })

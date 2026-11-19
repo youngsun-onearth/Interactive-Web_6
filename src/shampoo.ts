@@ -1,3 +1,4 @@
+import { createTrackingFrame, releaseTrackingFrame, postTrackingFrame } from './vision-frame'
 import './shampoo.css'
 import type { FaceLandmarker, HandLandmarker, ImageSegmenter } from '@mediapipe/tasks-vision'
 import { coverPoint, isClosedFist } from './lemonade-physics'
@@ -885,12 +886,15 @@ export function createShampoo(root: HTMLElement) {
     if (!handWorker || handInferenceBusy) return
     handInferenceBusy = true
     const worker = handWorker
-    void createImageBitmap(handInput).then((bitmap) => {
+    void createTrackingFrame(handInput).then((bitmap) => {
       if (!active || !ready || handWorker !== worker) {
-        bitmap.close(); handInferenceBusy = false; return
+        releaseTrackingFrame(bitmap)
+        if (handWorker === worker) handInferenceBusy = false
+        return
       }
-      worker.postMessage({ type: 'frame', bitmap, timestamp: now, width: inputWidth, height: inputHeight }, [bitmap])
+      postTrackingFrame(worker, { type: 'frame', bitmap, timestamp: now, width: inputWidth, height: inputHeight })
     }).catch(() => {
+      if (handWorker !== worker) return
       handInferenceBusy = false
       root.dataset.handTracker = 'worker-error'
     })
