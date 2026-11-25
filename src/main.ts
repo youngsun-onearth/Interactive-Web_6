@@ -16,7 +16,7 @@ const STAR_COUNT = 100
 type ExampleMode = 'heart' | 'walker' | 'gaze' | 'typing' | 'claw' | 'playground' | 'water' | 'lemonade' | 'snow' | 'doodle-face' | 'rubber-human' | 'shampoo' | 'animal-forest' | 'animal-forest-extended' | 'animal-forest-edition'
 
 // Temporary display settings. Keep the other examples and features available for restoration.
-const VISIBLE_EXAMPLES: readonly ExampleMode[] = ['heart', 'walker', 'gaze', 'typing', 'claw', 'playground', 'water', 'snow']
+const VISIBLE_EXAMPLES: readonly ExampleMode[] = ['heart', 'walker', 'gaze', 'typing', 'claw', 'playground', 'water', 'snow', 'rubber-human']
 const SHOW_GUESTBOOK = false
 const SHOW_CAPTURE = false
 
@@ -75,7 +75,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <span>10</span> DoodleFace
       </button>
       <button class="example-button" type="button" data-example="rubber-human" aria-pressed="false">
-        <span>11</span> 고무 인간
+        <span>09</span> 고무 인간
       </button>
       <button class="example-button" type="button" data-example="shampoo" aria-pressed="false">
         <span>12</span> Shampoo

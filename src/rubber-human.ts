@@ -344,7 +344,7 @@ export function createRubberHuman(root: HTMLElement) {
     <video class="rubber-human__camera" muted autoplay playsinline aria-hidden="true"></video>
     <canvas class="rubber-human__canvas" aria-label="핀치로 부드럽게 늘어나는 실시간 얼굴"></canvas>
     <header class="rubber-human__header">
-      <p>FACE × HAND INTERACTION / 11</p>
+      <p>FACE × HAND INTERACTION / 09</p>
       <h2>고무 인간</h2>
       <span>Soft face, elastic memory.</span>
     </header>
